@@ -1,0 +1,390 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Library Management System",
+    "description": "Library Management System Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Welcome"
+        ],
+        "summary": "To check whether Project is running",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/book": {
+      "get": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets all books"
+          },
+          "500": {
+            "description": "Server Error (Probably DB connection Failed)"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "summary": "Insert book",
+        "responses": {
+          "200": {
+            "description": "Book created"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "description": "Name of the book",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ]
+      }
+    },
+    "/book/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get book based on id",
+        "responses": {
+          "200": {
+            "description": "Book Found"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the book (Can be found from GET request)",
+            "type": "string",
+            "required": true
+          }
+        ]
+      },
+      "put": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update book based on id",
+        "responses": {
+          "200": {
+            "description": "Book updated"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "description": "Name of the book",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the book (Can be found from GET request)",
+            "type": "string",
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "summary": "Delete book",
+        "responses": {
+          "200": {
+            "description": "Book deleted"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the book (Can be found from GET request)",
+            "type": "string",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/book/{id}/active": {
+      "put": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update book status to active based on id",
+        "responses": {
+          "200": {
+            "description": "Book is now active"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the book (Can be found from GET request)",
+            "type": "string",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/book/{id}/deactive": {
+      "put": {
+        "security": [
+          {
+            "bearer": [
+
+            ]
+          }
+        ],
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update book status to deactive based on id",
+        "responses": {
+          "200": {
+            "description": "Book is now deactive"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of the book (Can be found from GET request)",
+            "type": "string",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/user/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Register new user"
+          },
+          "500": {
+            "description": "Server Error (Probably DB connection Failed)"
+          }
+        },
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User request for signup",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ]
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Login user"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server Error (Probably DB connection Failed)"
+          }
+        },
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "description": "User request for signup",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": [
+        "name",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "default": "new user"
+        },
+        "email": {
+          "type": "string",
+          "default": "abc@cvc.com"
+        },
+        "password": {
+          "type": "string",
+          "default": "123456"
+        },
+        "role": {
+          "type": "string",
+          "default": "STUDENT"
+        }
+      }
+    },
+    "UserLogin": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "default": "abc@cvc.com"
+        },
+        "password": {
+          "type": "string",
+          "default": "123456"
+        }
+      }
+    },
+    "Book": {
+      "required": [
+        "bookName",
+        "author",
+        "genre",
+        "releaseDate"
+      ],
+      "properties": {
+        "bookName": {
+          "type": "string",
+          "default": "new book"
+        },
+        "author": {
+          "type": "string",
+          "default": "new author"
+        },
+        "genre": {
+          "type": "string",
+          "default": "new genre"
+        },
+        "releaseDate": {
+          "type": "string",
+          "default": "new release Date"
+        }
+      }
+    }
+  }
+}

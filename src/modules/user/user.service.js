@@ -20,29 +20,48 @@ export const authUser = async (req, res, next) => {
 
     req.user = user;
     return next();
+};
+
+const fetchAllUsers = async () => {
+    const users = User.find();
+    return users;
 }
 
 export const getUser = async (data) => {
     try {
-        const _user = await User.findOne({ email: data.email });
-        if (!_user){
-            return null;
+        const _user = await User.findOne({email: data.email});
+        if (!_user) {
+            console.error("User not found!");
+            throw new Error('User not exist');
         }
-        return _user;
+        const accessToken = AuthServices.createToken(_user);
+        const user = {
+            id: _user._id,
+            name: _user.name,
+            email: _user.email,
+            accessToken
+        }
+        await User.updateOne({ _id: user._id }, {accessToken})
+        return accessToken;
     } catch (error) {
-        throw error;
+        console.error(error.message);
+        throw new Error(error.message);
     }
-}
+};
 
 export const createUser = async (data) => {
     try {
-        if (getUser(data)) {
-            return null;
+        if (await getUser(data)) {
+            throw new Error('User exist');
         }
-        const user = await User.create({data});
+    } catch (e) {
+        const user = await User.create(data);
         return user;
-    } catch (error) {
-        throw error;
     }
-    
-}
+};
+
+export const UserServices = {
+    getUser,
+    createUser,
+    fetchAllUsers
+};
