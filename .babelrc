@@ -2,12 +2,17 @@
   "presets": [
     "env",
     "react",
-    "stage-0"
+    "stage-0",
+    "es2016"
   ],
   "plugins": [
     "transform-class-properties",
     "transform-decorators",
     "transform-react-constant-elements",
-    "transform-react-inline-elements"
+    "transform-react-inline-elements",
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }]
   ]
 }
