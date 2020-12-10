@@ -293,7 +293,7 @@
 						"required": true
 					}
 				]
-			},
+			}
 		},
 		"/book/request": {
 			"post": {
