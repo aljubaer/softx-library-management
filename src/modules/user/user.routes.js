@@ -1,11 +1,13 @@
-import { Router } from 'express';
+import { Router } from "express";
+import * as Yup from 'yup';
 
-import { signUp, login, getAllUsers } from './user.controller';
+import { UserServices } from './user.service';
+import { signUp, login, getAllUsers } from "./user.controller";
 
 const routes = Router();
 
-routes.post('/signup', signUp);
-routes.post('/login', login);
-routes.get('/', getAllUsers);
+routes.get("/", getAllUsers);
+routes.post("/signup", signUp);
+routes.post("/login", login);
 
 export default routes;

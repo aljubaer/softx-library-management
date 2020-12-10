@@ -1,9 +1,10 @@
-import User from './user.model';
+import bcrypt from 'bcrypt';
 
+import User from './user.model';
 import { AuthServices } from '../../services/auth';
 
 
-export const authUser = async (req, res, next) => {
+const authUser = async (req, res, next) => {
     const token = AuthServices.getTokenFromHeaders(req);
 
     if (!token) {
@@ -27,12 +28,16 @@ const fetchAllUsers = async () => {
     return users;
 }
 
-export const getUser = async (data) => {
+const getUser = async (data) => {
     try {
         const _user = await User.findOne({email: data.email});
         if (!_user) {
             console.error("User not found!");
             throw new Error('User not exist');
+        }
+        const match = await bcrypt.compare(data.password, _user.password);
+        if (!match) {
+            throw new Error('Incorrect password');
         }
         const accessToken = AuthServices.createToken(_user);
         const user = {
@@ -49,12 +54,14 @@ export const getUser = async (data) => {
     }
 };
 
-export const createUser = async (data) => {
+const createUser = async (data) => {
     try {
-        if (await getUser(data)) {
+        const _user = await getUser(data);
+        if (_user) {
             throw new Error('User exist');
         }
     } catch (e) {
+        data.password = await bcrypt.hash(data.password, 10);
         const user = await User.create(data);
         return user;
     }

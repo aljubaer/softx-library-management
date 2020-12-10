@@ -1,5 +1,5 @@
-let roles;
-export default roles = {
-    admin: 'ADMIN',
-    student: 'STUDENT'
+const roles= {
+	admin: "ADMIN",
+	student: "STUDENT",
 };
+export default roles;

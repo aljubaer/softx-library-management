@@ -23,6 +23,12 @@ const fetchAll = async () => {
    return books;
 }
 
+const fetchAllBookId = async () => {
+    const books = await Book.find().select('_id');
+    console.log(books);
+    return books;
+}
+
 const updateBook = async (_id, data) => {
     const book = await Book.findOneAndUpdate( {_id}, data, {new: true});
     console.log(book);

@@ -44,7 +44,10 @@ const getTokenFromHeaders = (req, res, next) => {
 const isAdmin = (req, res, next) => {
     if (req.payload && req.payload.role === 'ADMIN') {
         next();
-    } else res.sendStatus(401);
+    }
+    else {
+        res.sendStatus(401);
+    }
 }
 
 export const AuthServices = {

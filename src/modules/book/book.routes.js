@@ -1,11 +1,11 @@
-import {Router} from 'express';
-import {BookServices} from "./book.service.js";
+import { Router } from 'express';
+import { BookServices } from "./book.service.js";
 import { AuthServices } from '../../services/auth';
 
 
 const routes = Router();
 
-routes.post('/', async (req, res) => {
+routes.post('/', [AuthServices.getTokenFromHeaders, AuthServices.isAdmin], async (req, res) => {
     try {
         const book = await BookServices.createBook(req.body);
         res.status(200).json(book);
@@ -37,7 +37,9 @@ routes.get('/:bookId', async (req, res) => {
     }
 });
 
-routes.delete('/:bookId', async (req, res, next) => {
+routes.delete('/:bookId',
+    [AuthServices.getTokenFromHeaders, AuthServices.isAdmin],
+    async (req, res, next) => {
     try {
         const id = req.params.bookId;
         const count = await BookServices.removeBook(id);
@@ -52,7 +54,9 @@ routes.delete('/:bookId', async (req, res, next) => {
 
 });
 
-routes.put('/:bookId', async (req, res) => {
+routes.put('/:bookId',
+    [AuthServices.getTokenFromHeaders, AuthServices.isAdmin],
+    async (req, res) => {
     try {
         const id = req.params.bookId;
         let updateOptions = req.body;
@@ -63,7 +67,9 @@ routes.put('/:bookId', async (req, res) => {
     }
 });
 
-routes.put('/:bookId/active', async (req, res) => {
+routes.put('/:bookId/active',
+    [AuthServices.getTokenFromHeaders, AuthServices.isAdmin],
+    async (req, res) => {
     try {
         const id = req.params.bookId;
         let updateOptions = {isActive: true};
@@ -74,7 +80,9 @@ routes.put('/:bookId/active', async (req, res) => {
     }
 });
 
-routes.put('/:bookId/deactive', async (req, res) => {
+routes.put('/:bookId/deactive',
+    [AuthServices.getTokenFromHeaders, AuthServices.isAdmin],
+    async (req, res) => {
     try {
         const id = req.params.bookId;
         let updateOptions = {isActive: false};
