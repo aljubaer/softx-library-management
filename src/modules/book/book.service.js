@@ -24,9 +24,12 @@ const fetchAll = async () => {
 }
 
 const fetchAllBookId = async () => {
-    const books = await Book.find().select('_id');
-    console.log(books);
-    return books;
+    const books = await Book.find();
+    const ids = [];
+    for (let key in books) {
+        ids.push(books[key]._id);
+    }
+    return ids;
 }
 
 const updateBook = async (_id, data) => {
@@ -40,5 +43,6 @@ export const BookServices = {
     removeBook,
     fetchAll,
     getBook,
-    updateBook
+    updateBook,
+    fetchAllBookId
 };

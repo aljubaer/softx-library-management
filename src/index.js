@@ -1,8 +1,11 @@
 import express from 'express';
+const path = require('path');
+
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 
 import middlewareConfig from './config/middleware';
 import './config/db';
-import {BookRoutes, UserRoutes} from "./modules";
+import {BookRoutes, UserRoutes, BookRequestRoutes} from "./modules";
 
 const app = express();
 
@@ -10,6 +13,7 @@ middlewareConfig(app);
 
 app.use('/user', UserRoutes);
 app.use('/book', BookRoutes);
+app.use('/book/request', BookRequestRoutes);
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');

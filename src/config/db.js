@@ -1,28 +1,30 @@
 import mongoose from "mongoose";
-
-import { DB_URL } from "../constants";
+// import { DB_URL } from "../../secret";
 
 mongoose.Promise = global.Promise;
 
 mongoose.set("debug", true);
 mongoose.set("useCreateIndex", true);
 
+const dburl = process.env.DB_URL
+    // || DB_URL;
+
 try {
-	mongoose.connect(DB_URL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	});
+    mongoose.connect(dburl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
 } catch (error) {
-	mongoose.createConnection(DB_URL, {
-		useNewURlParser: true,
-		useUnifiedTopology: true,
-	});
+    mongoose.createConnection(dburl, {
+        useNewURlParser: true,
+        useUnifiedTopology: true,
+    });
 }
 
 mongoose.connection
-	.once("open", () => {
-		console.log("MongoDB running");
-	})
-	.on("error", (err) => {
-		throw err;
-	});
+    .once("open", () => {
+        console.log("MongoDB running");
+    })
+    .on("error", (err) => {
+        throw err;
+    });
