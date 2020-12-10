@@ -274,7 +274,7 @@
 						"bearer": []
 					}
 				],
-				"tags": ["Books Request"],
+				"tags": ["Book Request"],
 				"summary": "Request a book based on id",
 				"responses": {
 					"200": {
@@ -294,66 +294,6 @@
 					}
 				]
 			},
-			"put": {
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"tags": ["Books"],
-				"summary": "Update book based on id",
-				"responses": {
-					"200": {
-						"description": "Book updated"
-					},
-					"404": {
-						"description": "Book not found"
-					}
-				},
-				"parameters": [
-					{
-						"name": "book",
-						"in": "body",
-						"description": "Name of the book",
-						"schema": {
-							"$ref": "#/definitions/Book"
-						}
-					},
-					{
-						"name": "id",
-						"in": "path",
-						"description": "Id of the book (Can be found from GET request)",
-						"type": "string",
-						"required": true
-					}
-				]
-			},
-			"delete": {
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"tags": ["Books"],
-				"summary": "Delete book",
-				"responses": {
-					"200": {
-						"description": "Book deleted"
-					},
-					"404": {
-						"description": "Book not found"
-					}
-				},
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"description": "Id of the book (Can be found from GET request)",
-						"type": "string",
-						"required": true
-					}
-				]
-			}
 		},
 		"/book/request": {
 			"post": {
@@ -362,7 +302,7 @@
 						"bearer": []
 					}
 				],
-				"tags": ["All Books Request"],
+				"tags": ["Book Request"],
 				"summary": "Request all book based on id",
 				"responses": {
 					"200": {
@@ -372,66 +312,6 @@
 						"description": "Book not found"
 					}
 				}
-			},
-			"put": {
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"tags": ["Books"],
-				"summary": "Update book based on id",
-				"responses": {
-					"200": {
-						"description": "Book updated"
-					},
-					"404": {
-						"description": "Book not found"
-					}
-				},
-				"parameters": [
-					{
-						"name": "book",
-						"in": "body",
-						"description": "Name of the book",
-						"schema": {
-							"$ref": "#/definitions/Book"
-						}
-					},
-					{
-						"name": "id",
-						"in": "path",
-						"description": "Id of the book (Can be found from GET request)",
-						"type": "string",
-						"required": true
-					}
-				]
-			},
-			"delete": {
-				"security": [
-					{
-						"bearer": []
-					}
-				],
-				"tags": ["Books"],
-				"summary": "Delete book",
-				"responses": {
-					"200": {
-						"description": "Book deleted"
-					},
-					"404": {
-						"description": "Book not found"
-					}
-				},
-				"parameters": [
-					{
-						"name": "id",
-						"in": "path",
-						"description": "Id of the book (Can be found from GET request)",
-						"type": "string",
-						"required": true
-					}
-				]
 			}
 		}
 	},
