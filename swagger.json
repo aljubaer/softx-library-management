@@ -39,13 +39,57 @@
 				}
 			}
 		},
+		"/user/signup": {
+			"post": {
+				"tags": ["Users"],
+				"responses": {
+					"200": {
+						"description": "Register new user"
+					},
+					"500": {
+						"description": "Server Error (Probably DB connection Failed)"
+					}
+				},
+				"parameters": [
+					{
+						"name": "user",
+						"in": "body",
+						"description": "User request for signup",
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				]
+			}
+		},
+		"/user/login": {
+			"post": {
+				"tags": ["Users"],
+				"responses": {
+					"200": {
+						"description": "Login user"
+					},
+					"404": {
+						"description": "User not found"
+					},
+					"500": {
+						"description": "Server Error (Probably DB connection Failed)"
+					}
+				},
+				"parameters": [
+					{
+						"name": "login",
+						"in": "body",
+						"description": "User request for signup",
+						"schema": {
+							"$ref": "#/definitions/UserLogin"
+						}
+					}
+				]
+			}
+		},
 		"/book": {
 			"get": {
-				"security": [
-					{
-						"bearer": []
-					}
-				],
 				"tags": ["Books"],
 				"responses": {
 					"200": {
@@ -86,11 +130,6 @@
 		},
 		"/book/{id}": {
 			"get": {
-				"security": [
-					{
-						"bearer": []
-					}
-				],
 				"tags": ["Books"],
 				"summary": "Get book based on id",
 				"responses": {
@@ -228,51 +267,169 @@
 				]
 			}
 		},
-		"/user/signup": {
+		"/book/request/{id}": {
 			"post": {
-				"tags": ["Users"],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"tags": ["Books Request"],
+				"summary": "Request a book based on id",
 				"responses": {
 					"200": {
-						"description": "Register new user"
+						"description": "Request created"
 					},
-					"500": {
-						"description": "Server Error (Probably DB connection Failed)"
+					"404": {
+						"description": "Book not found"
 					}
 				},
 				"parameters": [
 					{
-						"name": "user",
+						"name": "id",
+						"in": "path",
+						"description": "Id of the book",
+						"type": "string",
+						"required": true
+					}
+				]
+			},
+			"put": {
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"tags": ["Books"],
+				"summary": "Update book based on id",
+				"responses": {
+					"200": {
+						"description": "Book updated"
+					},
+					"404": {
+						"description": "Book not found"
+					}
+				},
+				"parameters": [
+					{
+						"name": "book",
 						"in": "body",
-						"description": "User request for signup",
+						"description": "Name of the book",
 						"schema": {
-							"$ref": "#/definitions/User"
+							"$ref": "#/definitions/Book"
 						}
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Id of the book (Can be found from GET request)",
+						"type": "string",
+						"required": true
+					}
+				]
+			},
+			"delete": {
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"tags": ["Books"],
+				"summary": "Delete book",
+				"responses": {
+					"200": {
+						"description": "Book deleted"
+					},
+					"404": {
+						"description": "Book not found"
+					}
+				},
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Id of the book (Can be found from GET request)",
+						"type": "string",
+						"required": true
 					}
 				]
 			}
 		},
-		"/user/login": {
+		"/book/request": {
 			"post": {
-				"tags": ["Users"],
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"tags": ["All Books Request"],
+				"summary": "Request all book based on id",
 				"responses": {
 					"200": {
-						"description": "Login user"
+						"description": "Request created"
 					},
 					"404": {
-						"description": "User not found"
+						"description": "Book not found"
+					}
+				}
+			},
+			"put": {
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"tags": ["Books"],
+				"summary": "Update book based on id",
+				"responses": {
+					"200": {
+						"description": "Book updated"
 					},
-					"500": {
-						"description": "Server Error (Probably DB connection Failed)"
+					"404": {
+						"description": "Book not found"
 					}
 				},
 				"parameters": [
 					{
-						"name": "login",
+						"name": "book",
 						"in": "body",
-						"description": "User request for signup",
+						"description": "Name of the book",
 						"schema": {
-							"$ref": "#/definitions/UserLogin"
+							"$ref": "#/definitions/Book"
 						}
+					},
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Id of the book (Can be found from GET request)",
+						"type": "string",
+						"required": true
+					}
+				]
+			},
+			"delete": {
+				"security": [
+					{
+						"bearer": []
+					}
+				],
+				"tags": ["Books"],
+				"summary": "Delete book",
+				"responses": {
+					"200": {
+						"description": "Book deleted"
+					},
+					"404": {
+						"description": "Book not found"
+					}
+				},
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "Id of the book (Can be found from GET request)",
+						"type": "string",
+						"required": true
 					}
 				]
 			}

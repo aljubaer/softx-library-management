@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { BookServices } from "./book.service.js";
 import { AuthServices } from '../../services/auth';
 
-
 const routes = Router();
 
 routes.post('/', [AuthServices.getTokenFromHeaders, AuthServices.isAdmin], async (req, res) => {
@@ -14,7 +13,7 @@ routes.post('/', [AuthServices.getTokenFromHeaders, AuthServices.isAdmin], async
     }
 });
 
-routes.get('/', [AuthServices.getTokenFromHeaders, AuthServices.isAdmin], async (req, res) => {
+routes.get('/', async (req, res) => {
     try {
         const books = await BookServices.fetchAll();
         res.status(200).json(books);
