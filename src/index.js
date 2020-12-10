@@ -1,7 +1,4 @@
 import express from 'express';
-const path = require('path');
-
-require('dotenv').config({path: path.join(__dirname, '../.env')});
 
 import middlewareConfig from './config/middleware';
 import './config/db';
